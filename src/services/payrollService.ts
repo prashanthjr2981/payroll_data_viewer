@@ -1,259 +1,89 @@
 import { PayrollData } from '../types/payroll';
-
-const mockPayrollDatabase: Record<string, Record<string, PayrollData>> = {
-  'EMP001': {
-    '01 2026': {
-      employee: {
-        employee_id: 'EMP001',
-        name: 'John Doe',
-        department: 'Engineering',
-        designation: 'Senior Developer',
-        email: 'john.doe@company.com'
-      },
-      monthly: {
-        basic_salary: 50000.00,
-        hra: 20000.00,
-        special_allowance: 15000.00,
-        other_allowances: 5000.00,
-        gross_earnings: 90000.00
-      },
-      ytd: {
-        year: 2026,
-        ytd_gross: 90000.00,
-        ytd_deductions: 15000.00,
-        ytd_net: 75000.00,
-        ytd_tax: 8000.00
-      },
-      professionalTax: {
-        pt_amount: 200.00,
-        pt_state: 'Maharashtra'
-      },
-      providentFund: {
-        employee_contribution: 6000.00,
-        employer_contribution: 6000.00,
-        pf_account_number: 'PF123456789'
-      },
-      incomeTax: {
-        tds_amount: 8000.00,
-        taxable_income: 90000.00,
-        tax_regime: 'New'
-      },
-      deductions: {
-        pf_deduction: 6000.00,
-        pt_deduction: 200.00,
-        tds_deduction: 8000.00,
-        loan_deduction: 0.00,
-        other_deductions: 800.00,
-        total_deductions: 15000.00
-      },
-      compensation: {
-        ctc: 1200000.00,
-        fixed_component: 1080000.00,
-        variable_component: 100000.00,
-        bonus: 20000.00
-      },
-      netPayment: {
-        gross_amount: 90000.00,
-        total_deductions: 15000.00,
-        net_amount: 75000.00,
-        payment_date: '2026-01-31',
-        payment_status: 'Paid'
-      }
-    },
-    '02 2026': {
-      employee: {
-        employee_id: 'EMP001',
-        name: 'John Doe',
-        department: 'Engineering',
-        designation: 'Senior Developer',
-        email: 'john.doe@company.com'
-      },
-      monthly: {
-        basic_salary: 50000.00,
-        hra: 20000.00,
-        special_allowance: 15000.00,
-        other_allowances: 5000.00,
-        gross_earnings: 90000.00
-      },
-      ytd: {
-        year: 2026,
-        ytd_gross: 180000.00,
-        ytd_deductions: 30000.00,
-        ytd_net: 150000.00,
-        ytd_tax: 16000.00
-      },
-      professionalTax: {
-        pt_amount: 200.00,
-        pt_state: 'Maharashtra'
-      },
-      providentFund: {
-        employee_contribution: 6000.00,
-        employer_contribution: 6000.00,
-        pf_account_number: 'PF123456789'
-      },
-      incomeTax: {
-        tds_amount: 8000.00,
-        taxable_income: 90000.00,
-        tax_regime: 'New'
-      },
-      deductions: {
-        pf_deduction: 6000.00,
-        pt_deduction: 200.00,
-        tds_deduction: 8000.00,
-        loan_deduction: 0.00,
-        other_deductions: 800.00,
-        total_deductions: 15000.00
-      },
-      compensation: {
-        ctc: 1200000.00,
-        fixed_component: 1080000.00,
-        variable_component: 100000.00,
-        bonus: 20000.00
-      },
-      netPayment: {
-        gross_amount: 90000.00,
-        total_deductions: 15000.00,
-        net_amount: 75000.00,
-        payment_date: '2026-02-28',
-        payment_status: 'Paid'
-      }
-    }
-  },
-  'EMP002': {
-    '01 2026': {
-      employee: {
-        employee_id: 'EMP002',
-        name: 'Jane Smith',
-        department: 'Finance',
-        designation: 'Financial Analyst',
-        email: 'jane.smith@company.com'
-      },
-      monthly: {
-        basic_salary: 45000.00,
-        hra: 18000.00,
-        special_allowance: 12000.00,
-        other_allowances: 5000.00,
-        gross_earnings: 80000.00
-      },
-      ytd: {
-        year: 2026,
-        ytd_gross: 80000.00,
-        ytd_deductions: 13000.00,
-        ytd_net: 67000.00,
-        ytd_tax: 7000.00
-      },
-      professionalTax: {
-        pt_amount: 200.00,
-        pt_state: 'Karnataka'
-      },
-      providentFund: {
-        employee_contribution: 5400.00,
-        employer_contribution: 5400.00,
-        pf_account_number: 'PF987654321'
-      },
-      incomeTax: {
-        tds_amount: 7000.00,
-        taxable_income: 80000.00,
-        tax_regime: 'Old'
-      },
-      deductions: {
-        pf_deduction: 5400.00,
-        pt_deduction: 200.00,
-        tds_deduction: 7000.00,
-        loan_deduction: 0.00,
-        other_deductions: 400.00,
-        total_deductions: 13000.00
-      },
-      compensation: {
-        ctc: 1000000.00,
-        fixed_component: 960000.00,
-        variable_component: 30000.00,
-        bonus: 10000.00
-      },
-      netPayment: {
-        gross_amount: 80000.00,
-        total_deductions: 13000.00,
-        net_amount: 67000.00,
-        payment_date: '2026-01-31',
-        payment_status: 'Paid'
-      }
-    }
-  },
-  'EMP003': {
-    '01 2026': {
-      employee: {
-        employee_id: 'EMP003',
-        name: 'Robert Johnson',
-        department: 'HR',
-        designation: 'HR Manager',
-        email: 'robert.j@company.com'
-      },
-      monthly: {
-        basic_salary: 55000.00,
-        hra: 22000.00,
-        special_allowance: 18000.00,
-        other_allowances: 5000.00,
-        gross_earnings: 100000.00
-      },
-      ytd: {
-        year: 2026,
-        ytd_gross: 100000.00,
-        ytd_deductions: 17000.00,
-        ytd_net: 83000.00,
-        ytd_tax: 10000.00
-      },
-      professionalTax: {
-        pt_amount: 200.00,
-        pt_state: 'Maharashtra'
-      },
-      providentFund: {
-        employee_contribution: 6600.00,
-        employer_contribution: 6600.00,
-        pf_account_number: 'PF456789123'
-      },
-      incomeTax: {
-        tds_amount: 10000.00,
-        taxable_income: 100000.00,
-        tax_regime: 'New'
-      },
-      deductions: {
-        pf_deduction: 6600.00,
-        pt_deduction: 200.00,
-        tds_deduction: 10000.00,
-        loan_deduction: 0.00,
-        other_deductions: 200.00,
-        total_deductions: 17000.00
-      },
-      compensation: {
-        ctc: 1400000.00,
-        fixed_component: 1200000.00,
-        variable_component: 150000.00,
-        bonus: 50000.00
-      },
-      netPayment: {
-        gross_amount: 100000.00,
-        total_deductions: 17000.00,
-        net_amount: 83000.00,
-        payment_date: '2026-01-31',
-        payment_status: 'Paid'
-      }
-    }
-  }
-};
+import { supabase } from '../lib/supabase';
 
 export const getPayrollData = async (
   employeeId: string,
   payrollPeriod: string
 ): Promise<PayrollData | null> => {
-  await new Promise(resolve => setTimeout(resolve, 500));
+  const { data: employee, error: employeeError } = await supabase
+    .from('employees')
+    .select('*')
+    .eq('employee_id', employeeId)
+    .maybeSingle();
 
-  const employeeData = mockPayrollDatabase[employeeId];
-  if (!employeeData) {
+  if (employeeError || !employee) {
     return null;
   }
 
-  const periodData = employeeData[payrollPeriod];
-  return periodData || null;
+  const { data: payrollRecord, error: payrollError } = await supabase
+    .from('payroll_records')
+    .select('*')
+    .eq('employee_id', employee.id)
+    .eq('payroll_period', payrollPeriod)
+    .maybeSingle();
+
+  if (payrollError || !payrollRecord) {
+    return null;
+  }
+
+  return {
+    employee: {
+      employee_id: employee.employee_id,
+      name: employee.name,
+      department: employee.department,
+      designation: employee.designation,
+      email: employee.email
+    },
+    monthly: {
+      basic_salary: payrollRecord.basic_salary,
+      hra: payrollRecord.hra,
+      special_allowance: payrollRecord.special_allowance,
+      other_allowances: payrollRecord.other_allowances,
+      gross_earnings: payrollRecord.gross_earnings
+    },
+    ytd: {
+      year: payrollRecord.year,
+      ytd_gross: payrollRecord.ytd_gross,
+      ytd_deductions: payrollRecord.ytd_deductions,
+      ytd_net: payrollRecord.ytd_net,
+      ytd_tax: payrollRecord.ytd_tax
+    },
+    professionalTax: {
+      pt_amount: payrollRecord.pt_amount,
+      pt_state: payrollRecord.pt_state
+    },
+    providentFund: {
+      employee_contribution: payrollRecord.employee_contribution,
+      employer_contribution: payrollRecord.employer_contribution,
+      pf_account_number: payrollRecord.pf_account_number
+    },
+    incomeTax: {
+      tds_amount: payrollRecord.tds_amount,
+      taxable_income: payrollRecord.taxable_income,
+      tax_regime: payrollRecord.tax_regime
+    },
+    deductions: {
+      pf_deduction: payrollRecord.pf_deduction,
+      pt_deduction: payrollRecord.pt_deduction,
+      tds_deduction: payrollRecord.tds_deduction,
+      loan_deduction: payrollRecord.loan_deduction,
+      other_deductions: payrollRecord.other_deductions,
+      total_deductions: payrollRecord.total_deductions
+    },
+    compensation: {
+      ctc: payrollRecord.ctc,
+      fixed_component: payrollRecord.fixed_component,
+      variable_component: payrollRecord.variable_component,
+      bonus: payrollRecord.bonus
+    },
+    netPayment: {
+      gross_amount: payrollRecord.gross_amount,
+      total_deductions: payrollRecord.total_deductions,
+      net_amount: payrollRecord.net_amount,
+      payment_date: payrollRecord.payment_date,
+      payment_status: payrollRecord.payment_status
+    }
+  };
 };
 
 export const formatCurrency = (amount: number): string => {
