@@ -66,7 +66,7 @@ function App() {
                   type="text"
                   value={employeeId}
                   onChange={(e) => setEmployeeId(e.target.value)}
-                  placeholder="EMP001"
+                  placeholder=""
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
@@ -108,11 +108,6 @@ function App() {
             </div>
           )}
 
-          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800">
-              <strong>Available Test Data:</strong> EMP001, EMP002, EMP003 | Periods: 01 2026, 02 2026 (for EMP001)
-            </p>
-          </div>
         </div>
 
         {payrollData && (
