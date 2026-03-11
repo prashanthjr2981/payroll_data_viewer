@@ -51,7 +51,6 @@ function App() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Payroll Data Viewer</h1>
-          <p className="text-gray-600">Access comprehensive payroll information instantly</p>
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
