@@ -144,6 +144,13 @@ function App() {
             )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <PayrollCard title="Compensation Details (COMP)" icon={<DollarSign className="w-6 h-6" />}>
+                <DataRow label="CTC" value={formatCurrency(payrollData.compensation.ctc)} />
+                <DataRow label="Fixed Component" value={formatCurrency(payrollData.compensation.fixed_component)} />
+                <DataRow label="Variable Component" value={formatCurrency(payrollData.compensation.variable_component)} />
+                <DataRow label="Bonus" value={formatCurrency(payrollData.compensation.bonus)} highlight />
+              </PayrollCard>
+
               <PayrollCard title="Monthly Payroll Data (MONR)" icon={<Calendar className="w-6 h-6" />}>
                 <DataRow label="Basic Salary" value={formatCurrency(payrollData.monthly.basic_salary)} />
                 <DataRow label="HRA" value={formatCurrency(payrollData.monthly.hra)} />
@@ -160,12 +167,12 @@ function App() {
                 <DataRow label="YTD Tax" value={formatCurrency(payrollData.ytd.ytd_tax)} highlight />
               </PayrollCard>
 
-              <PayrollCard title="Professional Tax" icon={<FileText className="w-6 h-6" />}>
+              <PayrollCard title="Professional Tax (PROF)" icon={<FileText className="w-6 h-6" />}>
                 <DataRow label="PT Amount" value={formatCurrency(payrollData.professionalTax.pt_amount)} />
                 <DataRow label="PT State" value={payrollData.professionalTax.pt_state} />
               </PayrollCard>
 
-              <PayrollCard title="Provident Fund" icon={<PieChart className="w-6 h-6" />}>
+              <PayrollCard title="Provident Fund (PFDR)" icon={<PieChart className="w-6 h-6" />}>
                 <DataRow label="Employee Contribution" value={formatCurrency(payrollData.providentFund.employee_contribution)} />
                 <DataRow label="Employer Contribution" value={formatCurrency(payrollData.providentFund.employer_contribution)} />
                 <DataRow label="PF Account Number" value={payrollData.providentFund.pf_account_number} />
@@ -176,13 +183,13 @@ function App() {
                 />
               </PayrollCard>
 
-              <PayrollCard title="Income Tax" icon={<Receipt className="w-6 h-6" />}>
+              <PayrollCard title="Income Tax (TAXR)" icon={<Receipt className="w-6 h-6" />}>
                 <DataRow label="TDS Amount" value={formatCurrency(payrollData.incomeTax.tds_amount)} />
                 <DataRow label="Taxable Income" value={formatCurrency(payrollData.incomeTax.taxable_income)} />
                 <DataRow label="Tax Regime" value={payrollData.incomeTax.tax_regime} highlight />
               </PayrollCard>
 
-              <PayrollCard title="Deductions" icon={<CreditCard className="w-6 h-6" />}>
+              <PayrollCard title="Deductions (DEDR)" icon={<CreditCard className="w-6 h-6" />}>
                 <DataRow label="PF Deduction" value={formatCurrency(payrollData.deductions.pf_deduction)} />
                 <DataRow label="PT Deduction" value={formatCurrency(payrollData.deductions.pt_deduction)} />
                 <DataRow label="TDS Deduction" value={formatCurrency(payrollData.deductions.tds_deduction)} />
@@ -191,14 +198,7 @@ function App() {
                 <DataRow label="Total Deductions" value={formatCurrency(payrollData.deductions.total_deductions)} highlight />
               </PayrollCard>
 
-              <PayrollCard title="Compensation Details" icon={<DollarSign className="w-6 h-6" />}>
-                <DataRow label="CTC" value={formatCurrency(payrollData.compensation.ctc)} />
-                <DataRow label="Fixed Component" value={formatCurrency(payrollData.compensation.fixed_component)} />
-                <DataRow label="Variable Component" value={formatCurrency(payrollData.compensation.variable_component)} />
-                <DataRow label="Bonus" value={formatCurrency(payrollData.compensation.bonus)} highlight />
-              </PayrollCard>
-
-              <PayrollCard title="Net Payment" icon={<DollarSign className="w-6 h-6" />}>
+              <PayrollCard title="Net Payment (NETP)" icon={<DollarSign className="w-6 h-6" />}>
                 <DataRow label="Gross Amount" value={formatCurrency(payrollData.netPayment.gross_amount)} />
                 <DataRow label="Total Deductions" value={formatCurrency(payrollData.netPayment.total_deductions)} />
                 <DataRow label="Net Amount" value={formatCurrency(payrollData.netPayment.net_amount)} highlight />
