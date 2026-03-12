@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Circle, XCircle, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { PayrollFlow, PAYROLL_STAGES, StageStatus } from '../types/payrollFlow';
+import { PayrollData } from '../types/payroll';
+import { formatCurrency } from '../services/payrollService';
 
 interface PayrollFlowChartProps {
   flow: PayrollFlow;
+  payrollData: PayrollData;
 }
 
 const getStatusBadge = (status: string) => {
@@ -27,7 +30,14 @@ const getStatusBadge = (status: string) => {
   };
 };
 
-export const PayrollFlowChart: React.FC<PayrollFlowChartProps> = ({ flow }) => {
+const DataItem: React.FC<{ label: string; value: string }> = ({ label, value }) => (
+  <div className="flex justify-between items-center py-1.5">
+    <span className="text-xs text-slate-600">{label}</span>
+    <span className="text-xs font-semibold text-slate-900">{value}</span>
+  </div>
+);
+
+export const PayrollFlowChart: React.FC<PayrollFlowChartProps> = ({ flow, payrollData }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [expandedStages, setExpandedStages] = useState<Set<string>>(new Set());
 
@@ -51,6 +61,141 @@ export const PayrollFlowChart: React.FC<PayrollFlowChartProps> = ({ flow }) => {
       }
       return newSet;
     });
+  };
+
+  const getStageData = (stageName: string) => {
+    switch (stageName) {
+      case 'INITIALIZATION':
+        return (
+          <div className="space-y-2">
+            <div className="bg-blue-50 rounded-md p-3 border border-blue-200">
+              <h5 className="text-xs font-semibold text-blue-900 mb-2">Employee Master (EMPR)</h5>
+              <DataItem label="Employee ID" value={payrollData.employee.employee_id} />
+              <DataItem label="Name" value={payrollData.employee.name} />
+              <DataItem label="Department" value={payrollData.employee.department} />
+              <DataItem label="Designation" value={payrollData.employee.designation} />
+            </div>
+            <div className="bg-purple-50 rounded-md p-3 border border-purple-200">
+              <h5 className="text-xs font-semibold text-purple-900 mb-2">Monthly Payroll (MONR)</h5>
+              <DataItem label="Basic Salary" value={formatCurrency(payrollData.monthly.basic_salary)} />
+              <DataItem label="HRA" value={formatCurrency(payrollData.monthly.hra)} />
+              <DataItem label="Special Allowance" value={formatCurrency(payrollData.monthly.special_allowance)} />
+              <DataItem label="Other Allowances" value={formatCurrency(payrollData.monthly.other_allowances)} />
+              <div className="border-t border-purple-300 my-2 pt-2">
+                <DataItem label="Gross Earnings" value={formatCurrency(payrollData.monthly.gross_earnings)} />
+              </div>
+            </div>
+            <div className="bg-amber-50 rounded-md p-3 border border-amber-200">
+              <h5 className="text-xs font-semibold text-amber-900 mb-2">Compensation (COMP)</h5>
+              <DataItem label="CTC" value={formatCurrency(payrollData.compensation.ctc)} />
+              <DataItem label="Fixed Component" value={formatCurrency(payrollData.compensation.fixed_component)} />
+              <DataItem label="Variable Component" value={formatCurrency(payrollData.compensation.variable_component)} />
+              <DataItem label="Bonus" value={formatCurrency(payrollData.compensation.bonus)} />
+            </div>
+          </div>
+        );
+
+      case 'HRA':
+        return (
+          <div className="bg-purple-50 rounded-md p-3 border border-purple-200">
+            <h5 className="text-xs font-semibold text-purple-900 mb-2">HRA Calculation (MONR)</h5>
+            <DataItem label="HRA Amount" value={formatCurrency(payrollData.monthly.hra)} />
+            <DataItem label="Basic Salary" value={formatCurrency(payrollData.monthly.basic_salary)} />
+            <p className="text-xs text-purple-700 mt-2 italic">Metro classification applied</p>
+          </div>
+        );
+
+      case 'PROF_TAX':
+        return (
+          <div className="space-y-2">
+            <div className="bg-red-50 rounded-md p-3 border border-red-200">
+              <h5 className="text-xs font-semibold text-red-900 mb-2">Professional Tax (PROF)</h5>
+              <DataItem label="PT Amount" value={formatCurrency(payrollData.professionalTax.pt_amount)} />
+              <DataItem label="PT State" value={payrollData.professionalTax.pt_state} />
+            </div>
+            <div className="bg-orange-50 rounded-md p-3 border border-orange-200">
+              <h5 className="text-xs font-semibold text-orange-900 mb-2">Deductions (DEDR)</h5>
+              <DataItem label="PT Deduction" value={formatCurrency(payrollData.deductions.pt_deduction)} />
+            </div>
+          </div>
+        );
+
+      case 'PROVIDENT_FUND':
+        return (
+          <div className="space-y-2">
+            <div className="bg-green-50 rounded-md p-3 border border-green-200">
+              <h5 className="text-xs font-semibold text-green-900 mb-2">Provident Fund (PFDR)</h5>
+              <DataItem label="Employee Contribution" value={formatCurrency(payrollData.providentFund.employee_contribution)} />
+              <DataItem label="Employer Contribution" value={formatCurrency(payrollData.providentFund.employer_contribution)} />
+              <DataItem label="PF Account Number" value={payrollData.providentFund.pf_account_number} />
+              <div className="border-t border-green-300 my-2 pt-2">
+                <DataItem label="Total PF" value={formatCurrency(payrollData.providentFund.employee_contribution + payrollData.providentFund.employer_contribution)} />
+              </div>
+            </div>
+            <div className="bg-orange-50 rounded-md p-3 border border-orange-200">
+              <h5 className="text-xs font-semibold text-orange-900 mb-2">Deductions (DEDR)</h5>
+              <DataItem label="PF Deduction" value={formatCurrency(payrollData.deductions.pf_deduction)} />
+            </div>
+          </div>
+        );
+
+      case 'INCOME_TAX':
+        return (
+          <div className="space-y-2">
+            <div className="bg-indigo-50 rounded-md p-3 border border-indigo-200">
+              <h5 className="text-xs font-semibold text-indigo-900 mb-2">Income Tax (TAXR)</h5>
+              <DataItem label="TDS Amount" value={formatCurrency(payrollData.incomeTax.tds_amount)} />
+              <DataItem label="Taxable Income" value={formatCurrency(payrollData.incomeTax.taxable_income)} />
+              <DataItem label="Tax Regime" value={payrollData.incomeTax.tax_regime} />
+            </div>
+            <div className="bg-orange-50 rounded-md p-3 border border-orange-200">
+              <h5 className="text-xs font-semibold text-orange-900 mb-2">Deductions (DEDR)</h5>
+              <DataItem label="TDS Deduction" value={formatCurrency(payrollData.deductions.tds_deduction)} />
+            </div>
+            <div className="bg-teal-50 rounded-md p-3 border border-teal-200">
+              <h5 className="text-xs font-semibold text-teal-900 mb-2">Year-to-Date (YTDR)</h5>
+              <DataItem label="YTD Tax" value={formatCurrency(payrollData.ytd.ytd_tax)} />
+            </div>
+          </div>
+        );
+
+      case 'COMPLETED':
+        return (
+          <div className="space-y-2">
+            <div className="bg-emerald-50 rounded-md p-3 border border-emerald-200">
+              <h5 className="text-xs font-semibold text-emerald-900 mb-2">Net Payment (NETP)</h5>
+              <DataItem label="Gross Amount" value={formatCurrency(payrollData.netPayment.gross_amount)} />
+              <DataItem label="Total Deductions" value={formatCurrency(payrollData.netPayment.total_deductions)} />
+              <div className="border-t border-emerald-300 my-2 pt-2">
+                <DataItem label="Net Amount" value={formatCurrency(payrollData.netPayment.net_amount)} />
+              </div>
+              <DataItem label="Payment Date" value={new Date(payrollData.netPayment.payment_date).toLocaleDateString('en-IN')} />
+              <DataItem label="Payment Status" value={payrollData.netPayment.payment_status} />
+            </div>
+            <div className="bg-teal-50 rounded-md p-3 border border-teal-200">
+              <h5 className="text-xs font-semibold text-teal-900 mb-2">Year-to-Date (YTDR)</h5>
+              <DataItem label="YTD Gross" value={formatCurrency(payrollData.ytd.ytd_gross)} />
+              <DataItem label="YTD Deductions" value={formatCurrency(payrollData.ytd.ytd_deductions)} />
+              <DataItem label="YTD Net Pay" value={formatCurrency(payrollData.ytd.ytd_net)} />
+              <DataItem label="YTD Tax" value={formatCurrency(payrollData.ytd.ytd_tax)} />
+            </div>
+            <div className="bg-orange-50 rounded-md p-3 border border-orange-200">
+              <h5 className="text-xs font-semibold text-orange-900 mb-2">All Deductions (DEDR)</h5>
+              <DataItem label="PF Deduction" value={formatCurrency(payrollData.deductions.pf_deduction)} />
+              <DataItem label="PT Deduction" value={formatCurrency(payrollData.deductions.pt_deduction)} />
+              <DataItem label="TDS Deduction" value={formatCurrency(payrollData.deductions.tds_deduction)} />
+              <DataItem label="Loan Deduction" value={formatCurrency(payrollData.deductions.loan_deduction)} />
+              <DataItem label="Other Deductions" value={formatCurrency(payrollData.deductions.other_deductions)} />
+              <div className="border-t border-orange-300 my-2 pt-2">
+                <DataItem label="Total Deductions" value={formatCurrency(payrollData.deductions.total_deductions)} />
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   const statusBadge = getStatusBadge(flow.status);
@@ -163,30 +308,10 @@ export const PayrollFlowChart: React.FC<PayrollFlowChartProps> = ({ flow }) => {
                         </div>
 
                         {isStageExpanded && (
-                          <div className="mt-2 pt-2 border-t border-slate-100 space-y-2">
+                          <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
                             <p className="text-xs text-slate-600 leading-relaxed">{stage.description}</p>
 
-                            <div className="bg-slate-50 rounded-md p-2 border border-slate-200">
-                              <div className="flex items-start gap-2">
-                                <div className="flex-shrink-0">
-                                  <svg className="w-3.5 h-3.5 text-slate-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 4v16M15 4v16M4 9h16M4 15h16" />
-                                  </svg>
-                                </div>
-                                <div className="flex-1">
-                                  <p className="text-xs font-medium text-slate-700 mb-1">Database Tables</p>
-                                  <div className="flex flex-wrap gap-1 mb-1.5">
-                                    {stage.tables.map(table => (
-                                      <span key={table} className="inline-flex items-center px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-mono font-medium border border-blue-200">
-                                        {table}
-                                      </span>
-                                    ))}
-                                  </div>
-                                  <p className="text-xs text-slate-600">{stage.tableDetails}</p>
-                                </div>
-                              </div>
-                            </div>
+                            {getStageData(stage.stage)}
 
                             {error && (
                               <div className="bg-red-50 border border-red-200 rounded-md p-2">

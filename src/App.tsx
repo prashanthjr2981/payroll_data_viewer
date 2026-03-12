@@ -140,7 +140,7 @@ function App() {
             </div>
 
             {payrollData.flow && (
-              <PayrollFlowChart flow={payrollData.flow as PayrollFlow} />
+              <PayrollFlowChart flow={payrollData.flow as PayrollFlow} payrollData={payrollData} />
             )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
