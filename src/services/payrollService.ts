@@ -26,6 +26,15 @@ export const getPayrollData = async (
     return null;
   }
 
+  const defaultFlowStages = [
+    { stage: 'INITIALIZATION', status: 'completed' },
+    { stage: 'HRA', status: 'completed' },
+    { stage: 'PROF_TAX', status: 'completed' },
+    { stage: 'PROVIDENT_FUND', status: 'completed' },
+    { stage: 'INCOME_TAX', status: 'completed' },
+    { stage: 'COMPLETED', status: 'completed' }
+  ];
+
   return {
     employee: {
       employee_id: employee.employee_id,
@@ -82,6 +91,13 @@ export const getPayrollData = async (
       net_amount: payrollRecord.net_amount,
       payment_date: payrollRecord.payment_date,
       payment_status: payrollRecord.payment_status
+    },
+    flow: {
+      status: payrollRecord.flow_status || 'completed',
+      currentStage: payrollRecord.current_stage,
+      failedAt: payrollRecord.failed_at_stage,
+      errorMessage: payrollRecord.error_message,
+      stages: payrollRecord.flow_stages || defaultFlowStages
     }
   };
 };

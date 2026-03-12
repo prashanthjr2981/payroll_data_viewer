@@ -12,8 +12,10 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { PayrollCard, DataRow } from './components/PayrollCard';
+import { PayrollFlowChart } from './components/PayrollFlowChart';
 import { getPayrollData, formatCurrency } from './services/payrollService';
 import { PayrollData } from './types/payroll';
+import { PayrollFlow } from './types/payrollFlow';
 
 function App() {
   const [employeeId, setEmployeeId] = useState('');
@@ -136,6 +138,10 @@ function App() {
                 </div>
               </div>
             </div>
+
+            {payrollData.flow && (
+              <PayrollFlowChart flow={payrollData.flow as PayrollFlow} />
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <PayrollCard title="Monthly Payroll Data (MONR)" icon={<Calendar className="w-6 h-6" />}>

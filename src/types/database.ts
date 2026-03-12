@@ -67,6 +67,11 @@ export interface Database {
           net_amount: number;
           payment_date: string;
           payment_status: string;
+          flow_status?: string;
+          current_stage?: string;
+          failed_at_stage?: string;
+          error_message?: string;
+          flow_stages?: any;
           created_at: string;
           updated_at: string;
         };

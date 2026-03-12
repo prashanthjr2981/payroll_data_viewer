@@ -63,6 +63,14 @@ export interface NetPayment {
   payment_status: string;
 }
 
+export interface PayrollFlowData {
+  status: string;
+  currentStage?: string;
+  failedAt?: string;
+  errorMessage?: string;
+  stages: any[];
+}
+
 export interface PayrollData {
   employee: Employee;
   monthly: PayrollMonthlyData;
@@ -73,4 +81,5 @@ export interface PayrollData {
   deductions: Deductions;
   compensation: CompensationDetails;
   netPayment: NetPayment;
+  flow?: PayrollFlowData;
 }
