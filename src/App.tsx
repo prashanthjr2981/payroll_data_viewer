@@ -100,36 +100,6 @@ function App() {
               <p className="text-red-800">{error}</p>
             </div>
           )}
-
-          <div className="mt-6 pt-6 border-t border-slate-200">
-            <p className="text-sm text-slate-600 mb-3 font-medium">Sample Employees:</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-lg p-3 border border-emerald-200">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                  <span className="text-xs font-semibold text-emerald-900">Completed</span>
-                </div>
-                <p className="text-sm font-bold text-slate-900">EMP002 - Priya Sharma</p>
-                <p className="text-xs text-slate-600">Finance Manager</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-3 border border-blue-200">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                  <span className="text-xs font-semibold text-blue-900">In Progress</span>
-                </div>
-                <p className="text-sm font-bold text-slate-900">EMP001 - Rajesh Kumar</p>
-                <p className="text-xs text-slate-600">Senior Software Engineer</p>
-              </div>
-              <div className="bg-gradient-to-br from-red-50 to-red-100/50 rounded-lg p-3 border border-red-200">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                  <span className="text-xs font-semibold text-red-900">Failed</span>
-                </div>
-                <p className="text-sm font-bold text-slate-900">EMP003 - Amit Patel</p>
-                <p className="text-xs text-slate-600">Sales Executive</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {payrollData && (
