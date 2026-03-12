@@ -39,11 +39,10 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-3">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900">
             Payroll Processing System
           </h1>
-          <p className="text-slate-600 text-lg">Real-time payroll workflow visualization and data viewer</p>
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 p-8 mb-8">
