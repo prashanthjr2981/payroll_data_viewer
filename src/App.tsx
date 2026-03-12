@@ -49,63 +49,64 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-white mb-3 tracking-tight">Payroll Analytics</h1>
-          <p className="text-slate-400 text-lg">Enterprise Payroll Data Viewer</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Payroll Data Viewer</h1>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 mb-8 border border-white/20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label htmlFor="employeeId" className="block text-sm font-semibold text-white mb-3">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-1">
+              <label htmlFor="employeeId" className="block text-sm font-semibold text-gray-700 mb-2">
                 Employee ID
               </label>
-              <div className="relative group">
-                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-blue-400 transition-colors" />
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   id="employeeId"
                   type="text"
                   value={employeeId}
                   onChange={(e) => setEmployeeId(e.target.value)}
-                  placeholder="Enter employee ID"
-                  className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/10 transition-all outline-none"
+                  placeholder=""
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
             </div>
 
-            <div>
-              <label htmlFor="payrollPeriod" className="block text-sm font-semibold text-white mb-3">
+            <div className="md:col-span-1">
+              <label htmlFor="payrollPeriod" className="block text-sm font-semibold text-gray-700 mb-2">
                 Payroll Period
               </label>
-              <div className="relative group">
-                <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-blue-400 transition-colors" />
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   id="payrollPeriod"
                   type="text"
                   value={payrollPeriod}
                   onChange={(e) => setPayrollPeriod(e.target.value)}
                   placeholder="MM YYYY (e.g., 01 2026)"
-                  className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/10 transition-all outline-none"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
             </div>
+
+            <div className="md:col-span-1 flex items-end">
+              <button
+                onClick={handleSearch}
+                disabled={loading}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Search className="w-5 h-5" />
+                {loading ? 'Searching...' : 'Search Payroll Data'}
+              </button>
+            </div>
           </div>
 
-          <button
-            onClick={handleSearch}
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/60 disabled:shadow-none"
-          >
-            <Search className="w-5 h-5" />
-            <span className="text-lg">{loading ? 'Searching...' : 'Search Payroll Data'}</span>
-          </button>
-
           {error && (
-            <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3 backdrop-blur-sm">
-              <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-              <p className="text-red-200">{error}</p>
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-red-800">{error}</p>
             </div>
           )}
 
