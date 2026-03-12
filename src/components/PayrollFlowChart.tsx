@@ -163,11 +163,33 @@ export const PayrollFlowChart: React.FC<PayrollFlowChartProps> = ({ flow }) => {
                         </div>
 
                         {isStageExpanded && (
-                          <div className="mt-2 pt-2 border-t border-slate-100">
+                          <div className="mt-2 pt-2 border-t border-slate-100 space-y-2">
                             <p className="text-xs text-slate-600 leading-relaxed">{stage.description}</p>
 
+                            <div className="bg-slate-50 rounded-md p-2 border border-slate-200">
+                              <div className="flex items-start gap-2">
+                                <div className="flex-shrink-0">
+                                  <svg className="w-3.5 h-3.5 text-slate-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 4v16M15 4v16M4 9h16M4 15h16" />
+                                  </svg>
+                                </div>
+                                <div className="flex-1">
+                                  <p className="text-xs font-medium text-slate-700 mb-1">Database Tables</p>
+                                  <div className="flex flex-wrap gap-1 mb-1.5">
+                                    {stage.tables.map(table => (
+                                      <span key={table} className="inline-flex items-center px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-mono font-medium border border-blue-200">
+                                        {table}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-slate-600">{stage.tableDetails}</p>
+                                </div>
+                              </div>
+                            </div>
+
                             {error && (
-                              <div className="mt-2 bg-red-50 border border-red-200 rounded-md p-2">
+                              <div className="bg-red-50 border border-red-200 rounded-md p-2">
                                 <div className="flex items-start gap-2">
                                   <XCircle className="w-3.5 h-3.5 text-red-600 mt-0.5 flex-shrink-0" />
                                   <div>

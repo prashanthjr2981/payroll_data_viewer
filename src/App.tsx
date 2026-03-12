@@ -114,27 +114,27 @@ function App() {
 
         {payrollData && (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-600">
-              <div className="flex items-center gap-3 mb-4">
-                <User className="w-6 h-6 text-blue-600" />
-                <h2 className="text-2xl font-bold text-gray-900">Employee Information</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-600">
+              <div className="flex items-center gap-2 mb-3">
+                <User className="w-5 h-5 text-blue-600" />
+                <h2 className="text-lg font-bold text-gray-900">Employee Information</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div>
-                  <p className="text-sm text-gray-500">Employee ID</p>
-                  <p className="text-lg font-semibold text-gray-900">{payrollData.employee.employee_id}</p>
+                  <p className="text-xs text-gray-500">Employee ID</p>
+                  <p className="text-sm font-semibold text-gray-900">{payrollData.employee.employee_id}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Name</p>
-                  <p className="text-lg font-semibold text-gray-900">{payrollData.employee.name}</p>
+                  <p className="text-xs text-gray-500">Name</p>
+                  <p className="text-sm font-semibold text-gray-900">{payrollData.employee.name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Department</p>
-                  <p className="text-lg font-semibold text-gray-900">{payrollData.employee.department}</p>
+                  <p className="text-xs text-gray-500">Department</p>
+                  <p className="text-sm font-semibold text-gray-900">{payrollData.employee.department}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Designation</p>
-                  <p className="text-lg font-semibold text-gray-900">{payrollData.employee.designation}</p>
+                  <p className="text-xs text-gray-500">Designation</p>
+                  <p className="text-sm font-semibold text-gray-900">{payrollData.employee.designation}</p>
                 </div>
               </div>
             </div>
